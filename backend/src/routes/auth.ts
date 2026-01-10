@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import { z } from 'zod';
 import { PrismaClient } from '@prisma/client';
 import { authMiddleware } from '../middleware/auth';
@@ -8,6 +8,10 @@ import { AuthRequest } from '../types';
 
 const router = Router();
 const prisma = new PrismaClient();
+
+const jwtOptions: SignOptions = {
+  expiresIn: '7d'
+};
 
 const registerSchema = z.object({
   email: z.string().email(),
@@ -50,9 +54,9 @@ router.post('/register', async (req: Request, res: Response) => {
     const token = jwt.sign(
       { userId: user.id, email: user.email },
       process.env.JWT_SECRET!,
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+      jwtOptions
     );
-    
+
     res.status(201).json({ user, token });
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -84,9 +88,9 @@ router.post('/login', async (req: Request, res: Response) => {
     const token = jwt.sign(
       { userId: user.id, email: user.email },
       process.env.JWT_SECRET!,
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+      jwtOptions
     );
-    
+
     res.json({
       user: {
         id: user.id,
