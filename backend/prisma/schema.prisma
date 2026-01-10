@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  trades       Trade[]
+  journals     Journal[]
+  dailyStats   DailyStats[]
+  monthlyStats MonthlyStats[]
+}
+
+enum Market {
+  STOCK
+  CRYPTO
+}
+
+enum Position {
+  LONG
+  SHORT
+}
+
+enum EmotionTag {
+  CONFIDENT
+  FEARFUL
+  GREEDY
+  NEUTRAL
+  FRUSTRATED
+  EXCITED
+  ANXIOUS
+  CALM
+}
+
+model Trade {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  asset       String
+  market      Market
+  position    Position
+  
+  entryPrice  Float
+  exitPrice   Float?
+  quantity    Float
+  fees        Float       @default(0)
+  
+  openedAt    DateTime
+  closedAt    DateTime?
+  
+  notes       String?
+  emotionTag  EmotionTag?
+  
+  pnl         Float?
+  pnlPercent  Float?
+  isOpen      Boolean     @default(true)
+  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([openedAt])
+  @@index([closedAt])
+}
+
+model Journal {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  date      DateTime @db.Date
+  content   String
+  mood      Int?     @default(5) // 1-10 scale
+  lessons   String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, date])
+  @@index([userId])
+}
+
+model DailyStats {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  date            DateTime @db.Date
+  
+  totalTrades     Int      @default(0)
+  winningTrades   Int      @default(0)
+  losingTrades    Int      @default(0)
+  
+  grossProfit     Float    @default(0)
+  grossLoss       Float    @default(0)
+  netPnl          Float    @default(0)
+  
+  totalFees       Float    @default(0)
+  
+  largestWin      Float    @default(0)
+  largestLoss     Float    @default(0)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, date])
+  @@index([userId])
+  @@index([date])
+}
+
+model MonthlyStats {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  year            Int
+  month           Int
+  
+  totalTrades     Int      @default(0)
+  winningTrades   Int      @default(0)
+  losingTrades    Int      @default(0)
+  
+  grossProfit     Float    @default(0)
+  grossLoss       Float    @default(0)
+  netPnl          Float    @default(0)
+  
+  totalFees       Float    @default(0)
+  
+  winRate         Float    @default(0)
+  profitFactor    Float    @default(0)
+  avgWin          Float    @default(0)
+  avgLoss         Float    @default(0)
+  
+  maxDrawdown     Float    @default(0)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, year, month])
+  @@index([userId])
+}
