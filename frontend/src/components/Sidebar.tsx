@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  TrendingUp, 
-  BookOpen, 
-  BarChart3, 
+import {
+  LayoutDashboard,
+  TrendingUp,
+  BookOpen,
+  BarChart3,
   LogOut,
-  PlusCircle
+  Menu,
+  X
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { Button } from './ui/button';
@@ -17,11 +18,34 @@ const navItems = [
   { to: '/journal', icon: BookOpen, label: 'Journal' },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onToggle: () => void;
+}
+
+export function Sidebar({ isOpen, onClose, onToggle }: SidebarProps) {
   const { user, logout } = useAuth();
 
   return (
-    <aside className="fixed left-0 top-0 z-40 h-screen w-64 border-r bg-card">
+    <>
+      {/* Mobile menu button - Fixed at top left */}
+      <button
+        onClick={onToggle}
+        className="fixed left-4 top-4 z-50 rounded-lg bg-card p-2 shadow-lg border lg:hidden hover:bg-accent transition-colors"
+        aria-label="Toggle menu"
+      >
+        {isOpen ? (
+          <X className="h-6 w-6" />
+        ) : (
+          <Menu className="h-6 w-6" />
+        )}
+      </button>
+
+      {/* Sidebar - Hidden on mobile by default, shown when isOpen is true, always visible on desktop (lg+) */}
+      <aside className={`fixed left-0 top-0 z-40 h-screen w-64 border-r bg-card transition-transform duration-300 ease-in-out ${
+        isOpen ? 'translate-x-0' : '-translate-x-full'
+      } lg:translate-x-0`}>
       <div className="flex h-full flex-col">
         <div className="flex h-16 items-center border-b px-6">
           <TrendingUp className="h-6 w-6 text-primary" />
@@ -33,6 +57,7 @@ export function Sidebar() {
             <NavLink
               key={item.to}
               to={item.to}
+              onClick={onClose}
               className={({ isActive }) =>
                 `flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
                   isActive
@@ -68,5 +93,6 @@ export function Sidebar() {
         </div>
       </div>
     </aside>
+    </>
   );
 }

@@ -51,13 +51,15 @@ export function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Dashboard</h1>
-          <p className="text-muted-foreground">Your trading performance at a glance</p>
+          <h1 className="text-2xl font-bold sm:text-3xl">Dashboard</h1>
+          <p className="text-sm text-muted-foreground sm:text-base">Your trading performance at a glance</p>
         </div>
-        <TradeForm onSuccess={fetchData} />
+        <div className="flex-shrink-0">
+          <TradeForm onSuccess={fetchData} />
+        </div>
       </div>
 
       {/* Behavior Warnings */}
@@ -113,14 +115,14 @@ export function DashboardPage() {
       </div>
 
       {/* Charts */}
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
         {/* Equity Curve */}
         <Card>
           <CardHeader>
-            <CardTitle>Equity Curve</CardTitle>
+            <CardTitle className="text-base sm:text-lg">Equity Curve</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div className="h-[250px] sm:h-[300px]">
               {equityCurve.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={equityCurve}>
@@ -161,10 +163,10 @@ export function DashboardPage() {
         {/* Profit by Trade */}
         <Card>
           <CardHeader>
-            <CardTitle>Recent Trades P&L</CardTitle>
+            <CardTitle className="text-base sm:text-lg">Recent Trades P&L</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div className="h-[250px] sm:h-[300px]">
               {equityCurve.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={equityCurve.slice(-20)}>
@@ -205,50 +207,50 @@ export function DashboardPage() {
       {metrics && (
         <Card>
           <CardHeader>
-            <CardTitle>Performance Metrics</CardTitle>
+            <CardTitle className="text-base sm:text-lg">Performance Metrics</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-5">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
               <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">Total Trades</p>
-                <p className="text-2xl font-bold">{metrics.totalTrades}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Total Trades</p>
+                <p className="text-xl sm:text-2xl font-bold">{metrics.totalTrades}</p>
               </div>
               <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">Win Rate</p>
-                <p className="text-2xl font-bold text-green-500">{metrics.winRate}%</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Win Rate</p>
+                <p className="text-xl sm:text-2xl font-bold text-green-500">{metrics.winRate}%</p>
               </div>
               <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">Avg Win</p>
-                <p className="text-2xl font-bold text-green-500">{formatCurrency(metrics.avgWin)}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Avg Win</p>
+                <p className="text-xl sm:text-2xl font-bold text-green-500">{formatCurrency(metrics.avgWin)}</p>
               </div>
               <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">Avg Loss</p>
-                <p className="text-2xl font-bold text-red-500">{formatCurrency(metrics.avgLoss)}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Avg Loss</p>
+                <p className="text-xl sm:text-2xl font-bold text-red-500">{formatCurrency(metrics.avgLoss)}</p>
               </div>
               <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">Profit Factor</p>
-                <p className="text-2xl font-bold">{metrics.profitFactor}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Profit Factor</p>
+                <p className="text-xl sm:text-2xl font-bold">{metrics.profitFactor}</p>
               </div>
               <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">Max Drawdown</p>
-                <p className="text-2xl font-bold text-red-500">{formatCurrency(metrics.maxDrawdown)}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Max Drawdown</p>
+                <p className="text-xl sm:text-2xl font-bold text-red-500">{formatCurrency(metrics.maxDrawdown)}</p>
               </div>
               <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">Expectancy</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Expectancy</p>
                 <p className={`text-2xl font-bold ${metrics.expectancy >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                   {formatCurrency(metrics.expectancy)}
                 </p>
               </div>
               <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">Winning Trades</p>
-                <p className="text-2xl font-bold text-green-500">{metrics.winningTrades}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Winning Trades</p>
+                <p className="text-xl sm:text-2xl font-bold text-green-500">{metrics.winningTrades}</p>
               </div>
               <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">Losing Trades</p>
-                <p className="text-2xl font-bold text-red-500">{metrics.losingTrades}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Losing Trades</p>
+                <p className="text-xl sm:text-2xl font-bold text-red-500">{metrics.losingTrades}</p>
               </div>
               <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">Total P&L</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Total P&L</p>
                 <p className={`text-2xl font-bold ${(pnl?.total ?? 0) >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                   {formatCurrency(pnl?.total ?? 0)}
                 </p>

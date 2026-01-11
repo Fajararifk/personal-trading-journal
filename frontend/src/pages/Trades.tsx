@@ -93,13 +93,15 @@ export function TradesPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Trades</h1>
-          <p className="text-muted-foreground">{total} total trades</p>
+          <h1 className="text-2xl font-bold sm:text-3xl">Trades</h1>
+          <p className="text-sm text-muted-foreground sm:text-base">{total} total trades</p>
         </div>
-        <TradeForm onSuccess={fetchTrades} />
+        <div className="flex-shrink-0">
+          <TradeForm onSuccess={fetchTrades} />
+        </div>
       </div>
 
       <div className="flex gap-2">
@@ -130,59 +132,59 @@ export function TradesPage() {
         <div className="space-y-4">
           {trades.map((trade) => (
             <Card key={trade.id}>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="flex flex-col">
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-lg">{trade.asset}</span>
-                        <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                          trade.position === 'LONG' ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'
-                        }`}>
-                          {trade.position}
+              <CardContent className="p-3 sm:p-4">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  {/* Header Section */}
+                  <div className="flex flex-col gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-bold text-base sm:text-lg">{trade.asset}</span>
+                      <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                        trade.position === 'LONG' ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'
+                      }`}>
+                        {trade.position}
+                      </span>
+                      <span className={`px-2 py-0.5 rounded text-xs ${
+                        trade.market === 'CRYPTO' ? 'bg-purple-500/20 text-purple-500' : 'bg-blue-500/20 text-blue-500'
+                      }`}>
+                        {trade.market}
+                      </span>
+                      {trade.isOpen && (
+                        <span className="px-2 py-0.5 rounded text-xs bg-yellow-500/20 text-yellow-500">
+                          OPEN
                         </span>
-                        <span className={`px-2 py-0.5 rounded text-xs ${
-                          trade.market === 'CRYPTO' ? 'bg-purple-500/20 text-purple-500' : 'bg-blue-500/20 text-blue-500'
-                        }`}>
-                          {trade.market}
-                        </span>
-                        {trade.isOpen && (
-                          <span className="px-2 py-0.5 rounded text-xs bg-yellow-500/20 text-yellow-500">
-                            OPEN
-                          </span>
-                        )}
-                      </div>
-                      <div className="text-sm text-muted-foreground mt-1">
-                        {format(new Date(trade.openedAt), 'MMM d, yyyy HH:mm')}
-                        {trade.closedAt && (
-                          <span> → {format(new Date(trade.closedAt), 'MMM d, yyyy HH:mm')}</span>
-                        )}
-                      </div>
+                      )}
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">
+                      {format(new Date(trade.openedAt), 'MMM d, yyyy HH:mm')}
+                      {trade.closedAt && (
+                        <span className="hidden sm:inline"> → {format(new Date(trade.closedAt), 'MMM d, yyyy HH:mm')}</span>
+                      )}
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-6">
-                    <div className="text-right">
-                      <div className="text-sm text-muted-foreground">Entry</div>
-                      <div className="font-medium">{formatCurrency(trade.entryPrice)}</div>
+                  {/* Data Grid - Responsive Layout */}
+                  <div className="grid grid-cols-3 gap-3 sm:flex sm:items-center sm:gap-6">
+                    <div className="text-left sm:text-right">
+                      <div className="text-xs text-muted-foreground">Entry</div>
+                      <div className="font-medium text-sm sm:text-base">{formatCurrency(trade.entryPrice)}</div>
                     </div>
-                    
+
                     {trade.exitPrice && (
-                      <div className="text-right">
-                        <div className="text-sm text-muted-foreground">Exit</div>
-                        <div className="font-medium">{formatCurrency(trade.exitPrice)}</div>
+                      <div className="text-left sm:text-right">
+                        <div className="text-xs text-muted-foreground">Exit</div>
+                        <div className="font-medium text-sm sm:text-base">{formatCurrency(trade.exitPrice)}</div>
                       </div>
                     )}
-                    
-                    <div className="text-right">
-                      <div className="text-sm text-muted-foreground">Qty</div>
-                      <div className="font-medium">{trade.quantity}</div>
+
+                    <div className="text-left sm:text-right">
+                      <div className="text-xs text-muted-foreground">Qty</div>
+                      <div className="font-medium text-sm sm:text-base">{trade.quantity}</div>
                     </div>
 
                     {trade.pnl !== null && trade.pnl !== undefined && (
-                      <div className="text-right min-w-[100px]">
-                        <div className="text-sm text-muted-foreground">P&L</div>
-                        <div className={`font-bold ${trade.pnl >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      <div className="text-left sm:text-right col-span-3 sm:col-span-1 sm:min-w-[100px]">
+                        <div className="text-xs text-muted-foreground">P&L</div>
+                        <div className={`font-bold text-sm sm:text-base ${trade.pnl >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                           {trade.pnl >= 0 ? '+' : ''}{formatCurrency(trade.pnl)}
                           {trade.pnlPercent != null && (
                             <span className="text-xs ml-1">
@@ -192,26 +194,28 @@ export function TradesPage() {
                         </div>
                       </div>
                     )}
+                  </div>
 
-                    <div className="flex items-center gap-2">
-                      {trade.isOpen && (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => setCloseDialog(trade)}
-                        >
-                          Close
-                        </Button>
-                      )}
+                  {/* Action Buttons */}
+                  <div className="flex items-center gap-2 pt-2 border-t sm:border-t-0 sm:pt-0">
+                    {trade.isOpen && (
                       <Button
-                        size="icon"
-                        variant="ghost"
-                        className="text-destructive hover:text-destructive"
-                        onClick={() => handleDelete(trade.id)}
+                        size="sm"
+                        variant="outline"
+                        onClick={() => setCloseDialog(trade)}
+                        className="flex-1 sm:flex-none"
                       >
-                        <Trash2 className="h-4 w-4" />
+                        Close
                       </Button>
-                    </div>
+                    )}
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="text-destructive hover:text-destructive"
+                      onClick={() => handleDelete(trade.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                   </div>
                 </div>
 

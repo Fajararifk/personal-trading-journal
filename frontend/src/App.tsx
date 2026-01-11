@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useState } from 'react';
 import { AuthProvider, useAuth } from './lib/auth';
 import { Sidebar } from './components/Sidebar';
 import { LoginPage } from './pages/Login';
@@ -26,11 +27,28 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const closeSidebar = () => setSidebarOpen(false);
+
   return (
     <div className="min-h-screen bg-background">
-      <Sidebar />
-      <main className="pl-64">
-        <div className="p-8">{children}</div>
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={closeSidebar}
+        onToggle={toggleSidebar}
+      />
+      {/* Backdrop overlay for mobile */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 lg:hidden"
+          onClick={closeSidebar}
+        />
+      )}
+      {/* Responsive main content - no left padding on mobile, padded on desktop */}
+      <main className="min-h-screen lg:pl-64">
+        <div className="p-4 sm:p-6 lg:p-8">{children}</div>
       </main>
     </div>
   );

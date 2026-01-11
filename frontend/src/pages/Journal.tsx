@@ -85,16 +85,16 @@ export function JournalPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Trading Journal</h1>
-          <p className="text-muted-foreground">Reflect on your trading day</p>
+          <h1 className="text-2xl font-bold sm:text-3xl">Trading Journal</h1>
+          <p className="text-sm text-muted-foreground sm:text-base">Reflect on your trading day</p>
         </div>
-        
+
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button className="w-full sm:w-auto">
               <PlusCircle className="mr-2 h-4 w-4" />
               New Entry
             </Button>
@@ -104,7 +104,7 @@ export function JournalPage() {
               <DialogTitle>New Journal Entry</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="date">Date</Label>
                   <Input
@@ -182,15 +182,15 @@ export function JournalPage() {
           {entries.map((entry) => (
             <Card key={entry.id}>
               <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">{getMoodEmoji(entry.mood)}</span>
-                    <div>
-                      <CardTitle className="text-lg">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-start gap-2 sm:gap-3 min-w-0 flex-1">
+                    <span className="text-xl sm:text-2xl flex-shrink-0">{getMoodEmoji(entry.mood)}</span>
+                    <div className="min-w-0 flex-1">
+                      <CardTitle className="text-base sm:text-lg">
                         {format(new Date(entry.date), 'EEEE, MMMM d, yyyy')}
                       </CardTitle>
                       {entry.mood && (
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                           Mood: {entry.mood}/10
                         </p>
                       )}
@@ -199,7 +199,7 @@ export function JournalPage() {
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="text-destructive hover:text-destructive"
+                    className="text-destructive hover:text-destructive flex-shrink-0"
                     onClick={() => handleDelete(entry.id)}
                   >
                     <Trash2 className="h-4 w-4" />
@@ -207,7 +207,7 @@ export function JournalPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="whitespace-pre-wrap">{entry.content}</p>
+                <p className="text-sm sm:text-base whitespace-pre-wrap">{entry.content}</p>
                 
                 {entry.lessons && (
                   <div className="mt-4 p-3 rounded-lg bg-accent">

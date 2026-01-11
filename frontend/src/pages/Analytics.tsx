@@ -54,28 +54,28 @@ export function AnalyticsPage() {
   ] : [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Analytics</h1>
-        <p className="text-muted-foreground">Deep dive into your trading performance</p>
+        <h1 className="text-2xl font-bold sm:text-3xl">Analytics</h1>
+        <p className="text-sm text-muted-foreground sm:text-base">Deep dive into your trading performance</p>
       </div>
 
       {/* Key Metrics */}
       {metrics && (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
-            <CardContent className="p-6">
-              <div className="text-sm text-muted-foreground">Win Rate</div>
-              <div className="text-3xl font-bold text-green-500">{metrics.winRate}%</div>
+            <CardContent className="p-4 sm:p-6">
+              <div className="text-xs sm:text-sm text-muted-foreground">Win Rate</div>
+              <div className="text-2xl sm:text-3xl font-bold text-green-500">{metrics.winRate}%</div>
               <div className="text-xs text-muted-foreground mt-1">
                 {metrics.winningTrades}W / {metrics.losingTrades}L
               </div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6">
-              <div className="text-sm text-muted-foreground">Profit Factor</div>
-              <div className={`text-3xl font-bold ${metrics.profitFactor >= 1 ? 'text-green-500' : 'text-red-500'}`}>
+            <CardContent className="p-4 sm:p-6">
+              <div className="text-xs sm:text-sm text-muted-foreground">Profit Factor</div>
+              <div className={`text-2xl sm:text-3xl font-bold ${metrics.profitFactor >= 1 ? 'text-green-500' : 'text-red-500'}`}>
                 {metrics.profitFactor}
               </div>
               <div className="text-xs text-muted-foreground mt-1">
@@ -84,9 +84,9 @@ export function AnalyticsPage() {
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6">
-              <div className="text-sm text-muted-foreground">Expectancy</div>
-              <div className={`text-3xl font-bold ${metrics.expectancy >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+            <CardContent className="p-4 sm:p-6">
+              <div className="text-xs sm:text-sm text-muted-foreground">Expectancy</div>
+              <div className={`text-2xl sm:text-3xl font-bold ${metrics.expectancy >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                 {formatCurrency(metrics.expectancy)}
               </div>
               <div className="text-xs text-muted-foreground mt-1">
@@ -95,9 +95,9 @@ export function AnalyticsPage() {
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-6">
-              <div className="text-sm text-muted-foreground">Max Drawdown</div>
-              <div className="text-3xl font-bold text-red-500">
+            <CardContent className="p-4 sm:p-6">
+              <div className="text-xs sm:text-sm text-muted-foreground">Max Drawdown</div>
+              <div className="text-2xl sm:text-3xl font-bold text-red-500">
                 {formatCurrency(metrics.maxDrawdown)}
               </div>
               <div className="text-xs text-muted-foreground mt-1">
@@ -111,19 +111,19 @@ export function AnalyticsPage() {
       {/* Profit Over Time */}
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Profit Over Time</CardTitle>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <CardTitle className="text-base sm:text-lg">Profit Over Time</CardTitle>
             <Tabs value={period} onValueChange={setPeriod}>
-              <TabsList>
-                <TabsTrigger value="daily">Daily</TabsTrigger>
-                <TabsTrigger value="weekly">Weekly</TabsTrigger>
-                <TabsTrigger value="monthly">Monthly</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-3 sm:w-auto">
+                <TabsTrigger value="daily" className="text-xs sm:text-sm">Daily</TabsTrigger>
+                <TabsTrigger value="weekly" className="text-xs sm:text-sm">Weekly</TabsTrigger>
+                <TabsTrigger value="monthly" className="text-xs sm:text-sm">Monthly</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="h-[300px]">
+          <div className="h-[250px] sm:h-[300px]">
             {profitData.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={profitData}>
@@ -158,14 +158,14 @@ export function AnalyticsPage() {
         </CardContent>
       </Card>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
         {/* Win/Loss Pie */}
         <Card>
           <CardHeader>
-            <CardTitle>Win/Loss Distribution</CardTitle>
+            <CardTitle className="text-base sm:text-lg">Win/Loss Distribution</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div className="h-[250px] sm:h-[300px]">
               {metrics && metrics.totalTrades > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -200,10 +200,10 @@ export function AnalyticsPage() {
         {/* By Market */}
         <Card>
           <CardHeader>
-            <CardTitle>Performance by Market</CardTitle>
+            <CardTitle className="text-base sm:text-lg">Performance by Market</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div className="h-[250px] sm:h-[300px]">
               {distribution && distribution.byMarket.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={distribution.byMarket} layout="vertical">
@@ -235,7 +235,7 @@ export function AnalyticsPage() {
       {distribution && distribution.byAsset.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle>Performance by Asset</CardTitle>
+            <CardTitle className="text-base sm:text-lg">Performance by Asset</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -243,12 +243,12 @@ export function AnalyticsPage() {
                 .sort((a, b) => b.pnl - a.pnl)
                 .slice(0, 10)
                 .map((asset) => (
-                  <div key={asset.asset} className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <span className="font-medium">{asset.asset}</span>
-                      <span className="text-sm text-muted-foreground">{asset.count} trades</span>
+                  <div key={asset.asset} className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                      <span className="font-medium text-sm sm:text-base truncate">{asset.asset}</span>
+                      <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">{asset.count} trades</span>
                     </div>
-                    <span className={`font-bold ${asset.pnl >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    <span className={`font-bold text-sm sm:text-base whitespace-nowrap ${asset.pnl >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                       {asset.pnl >= 0 ? '+' : ''}{formatCurrency(asset.pnl)}
                     </span>
                   </div>
@@ -262,25 +262,25 @@ export function AnalyticsPage() {
       {metrics && (
         <Card>
           <CardHeader>
-            <CardTitle>Risk/Reward Analysis</CardTitle>
+            <CardTitle className="text-base sm:text-lg">Risk/Reward Analysis</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-6 md:grid-cols-3">
-              <div className="text-center p-4 rounded-lg bg-green-500/10">
-                <div className="text-sm text-muted-foreground mb-1">Average Win</div>
-                <div className="text-2xl font-bold text-green-500">
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-3">
+              <div className="text-center p-3 sm:p-4 rounded-lg bg-green-500/10">
+                <div className="text-xs sm:text-sm text-muted-foreground mb-1">Average Win</div>
+                <div className="text-xl sm:text-2xl font-bold text-green-500">
                   {formatCurrency(metrics.avgWin)}
                 </div>
               </div>
-              <div className="text-center p-4 rounded-lg bg-red-500/10">
-                <div className="text-sm text-muted-foreground mb-1">Average Loss</div>
-                <div className="text-2xl font-bold text-red-500">
+              <div className="text-center p-3 sm:p-4 rounded-lg bg-red-500/10">
+                <div className="text-xs sm:text-sm text-muted-foreground mb-1">Average Loss</div>
+                <div className="text-xl sm:text-2xl font-bold text-red-500">
                   {formatCurrency(metrics.avgLoss)}
                 </div>
               </div>
-              <div className="text-center p-4 rounded-lg bg-blue-500/10">
-                <div className="text-sm text-muted-foreground mb-1">Risk/Reward Ratio</div>
-                <div className="text-2xl font-bold text-blue-500">
+              <div className="text-center p-3 sm:p-4 rounded-lg bg-blue-500/10">
+                <div className="text-xs sm:text-sm text-muted-foreground mb-1">Risk/Reward Ratio</div>
+                <div className="text-xl sm:text-2xl font-bold text-blue-500">
                   {metrics.avgLoss > 0 ? (metrics.avgWin / metrics.avgLoss).toFixed(2) : '∞'}:1
                 </div>
               </div>
