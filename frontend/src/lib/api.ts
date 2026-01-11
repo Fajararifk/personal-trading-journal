@@ -187,7 +187,7 @@ export interface Trade {
   id: string;
   asset: string;
   market: 'STOCK' | 'CRYPTO';
-  position: 'LONG' | 'SHORT';
+  position: 'BELI' | 'JUAL';
   entryPrice: number;
   exitPrice?: number;
   quantity: number;
@@ -204,7 +204,7 @@ export interface Trade {
 export interface TradeInput {
   asset: string;
   market: 'STOCK' | 'CRYPTO';
-  position: 'LONG' | 'SHORT';
+  position: 'BELI' | 'JUAL';
   entryPrice: number;
   exitPrice?: number;
   quantity: number;
@@ -327,7 +327,7 @@ export interface PositionSizeResult {
 export interface StopLossInput {
   entryPrice: number;
   riskPercent: number;
-  position: 'LONG' | 'SHORT';
+  position: 'BELI' | 'JUAL';
 }
 
 export interface StopLossResult {
@@ -340,7 +340,7 @@ export interface RiskRewardInput {
   entryPrice: number;
   stopLoss: number;
   targetPrice: number;
-  position: 'LONG' | 'SHORT';
+  position: 'BELI' | 'JUAL';
 }
 
 export interface RiskRewardResult {

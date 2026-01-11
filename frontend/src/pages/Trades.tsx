@@ -137,7 +137,7 @@ export function TradesPage() {
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-lg">{trade.asset}</span>
                         <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                          trade.position === 'LONG' ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'
+                          trade.position === 'BELI' ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'
                         }`}>
                           {trade.position}
                         </span>

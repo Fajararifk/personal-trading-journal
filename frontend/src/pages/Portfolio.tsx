@@ -292,7 +292,7 @@ export function PortfolioPage() {
                       </td>
                       <td className="py-3 px-4">
                         <span className={`px-2 py-1 rounded text-xs font-medium ${
-                          position.position === 'LONG'
+                          position.position === 'BELI'
                             ? 'bg-green-500/10 text-green-500'
                             : 'bg-red-500/10 text-red-500'
                         }`}>

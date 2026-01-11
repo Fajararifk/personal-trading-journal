@@ -24,14 +24,14 @@ export function RiskManagementPage() {
   // Stop Loss Calculator State
   const [slEntryPrice, setSlEntryPrice] = useState('');
   const [slRiskPercent, setSlRiskPercent] = useState('');
-  const [slPosition, setSlPosition] = useState<'LONG' | 'SHORT'>('LONG');
+  const [slPosition, setSlPosition] = useState<'BELI' | 'JUAL'>('BELI');
   const [slResult, setSlResult] = useState<StopLossResult | null>(null);
 
   // Risk/Reward Calculator State
   const [rrEntryPrice, setRrEntryPrice] = useState('');
   const [rrStopLoss, setRrStopLoss] = useState('');
   const [rrTargetPrice, setRrTargetPrice] = useState('');
-  const [rrPosition, setRrPosition] = useState<'LONG' | 'SHORT'>('LONG');
+  const [rrPosition, setRrPosition] = useState<'BELI' | 'JUAL'>('BELI');
   const [rrResult, setRrResult] = useState<RiskRewardResult | null>(null);
 
   useEffect(() => {
@@ -287,14 +287,14 @@ export function RiskManagementPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label>Position Type</Label>
-              <Select value={slPosition} onValueChange={(v: 'LONG' | 'SHORT') => setSlPosition(v)}>
+              <Label>Tipe Posisi</Label>
+              <Select value={slPosition} onValueChange={(v: 'BELI' | 'JUAL') => setSlPosition(v)}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="LONG">LONG (Buy)</SelectItem>
-                  <SelectItem value="SHORT">SHORT (Sell)</SelectItem>
+                  <SelectItem value="BELI">BELI</SelectItem>
+                  <SelectItem value="JUAL">JUAL</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -360,14 +360,14 @@ export function RiskManagementPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Position Type</Label>
-                <Select value={rrPosition} onValueChange={(v: 'LONG' | 'SHORT') => setRrPosition(v)}>
+                <Label>Tipe Posisi</Label>
+                <Select value={rrPosition} onValueChange={(v: 'BELI' | 'JUAL') => setRrPosition(v)}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="LONG">LONG</SelectItem>
-                    <SelectItem value="SHORT">SHORT</SelectItem>
+                    <SelectItem value="BELI">BELI</SelectItem>
+                    <SelectItem value="JUAL">JUAL</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

@@ -50,7 +50,7 @@ export function TradeForm({ onSuccess }: TradeFormProps) {
     const data: TradeInput = {
       asset: formData.get('asset') as string,
       market: formData.get('market') as 'STOCK' | 'CRYPTO',
-      position: formData.get('position') as 'LONG' | 'SHORT',
+      position: formData.get('position') as 'BELI' | 'JUAL',
       entryPrice: parseFloat(formData.get('entryPrice') as string),
       quantity: parseFloat(formData.get('quantity') as string),
       fees: parseFloat(formData.get('fees') as string) || 0,
@@ -122,14 +122,14 @@ export function TradeForm({ onSuccess }: TradeFormProps) {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="position">Position</Label>
-              <Select name="position" defaultValue="LONG">
+              <Label htmlFor="position">Posisi</Label>
+              <Select name="position" defaultValue="BELI">
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="LONG">Long</SelectItem>
-                  <SelectItem value="SHORT">Short</SelectItem>
+                  <SelectItem value="BELI">Beli</SelectItem>
+                  <SelectItem value="JUAL">Jual</SelectItem>
                 </SelectContent>
               </Select>
             </div>

@@ -122,14 +122,14 @@ router.post('/calculate/stop-loss', async (req: AuthRequest, res: Response) => {
     const schema = z.object({
       entryPrice: z.number().positive(),
       riskPercent: z.number().positive().max(100),
-      position: z.enum(['LONG', 'SHORT']),
+      position: z.enum(['BELI', 'JUAL']),
     });
 
     const { entryPrice, riskPercent, position } = schema.parse(req.body);
 
     // Calculate stop loss based on risk percentage
     let stopLoss: number;
-    if (position === 'LONG') {
+    if (position === 'BELI') {
       stopLoss = entryPrice * (1 - riskPercent / 100);
     } else {
       stopLoss = entryPrice * (1 + riskPercent / 100);
@@ -161,7 +161,7 @@ router.post('/calculate/risk-reward', async (req: AuthRequest, res: Response) =>
       entryPrice: z.number().positive(),
       stopLoss: z.number().positive(),
       targetPrice: z.number().positive(),
-      position: z.enum(['LONG', 'SHORT']),
+      position: z.enum(['BELI', 'JUAL']),
     });
 
     const { entryPrice, stopLoss, targetPrice, position } = schema.parse(req.body);
@@ -169,7 +169,7 @@ router.post('/calculate/risk-reward', async (req: AuthRequest, res: Response) =>
     let risk: number;
     let reward: number;
 
-    if (position === 'LONG') {
+    if (position === 'BELI') {
       risk = entryPrice - stopLoss;
       reward = targetPrice - entryPrice;
     } else {

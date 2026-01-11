@@ -2,23 +2,23 @@ import { Trade } from '@prisma/client';
 import { PerformanceMetrics, BehaviorWarning } from '../types';
 
 export function calculatePnL(
-  position: 'LONG' | 'SHORT',
+  position: 'BELI' | 'JUAL',
   entryPrice: number,
   exitPrice: number,
   quantity: number,
   fees: number = 0
 ): { pnl: number; pnlPercent: number } {
   let pnl: number;
-  
-  if (position === 'LONG') {
+
+  if (position === 'BELI') {
     pnl = (exitPrice - entryPrice) * quantity - fees;
   } else {
     pnl = (entryPrice - exitPrice) * quantity - fees;
   }
-  
+
   const investment = entryPrice * quantity;
   const pnlPercent = investment > 0 ? (pnl / investment) * 100 : 0;
-  
+
   return { pnl, pnlPercent };
 }
 

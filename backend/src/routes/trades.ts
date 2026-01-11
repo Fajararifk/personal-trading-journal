@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 const tradeSchema = z.object({
   asset: z.string().min(1),
   market: z.enum(['STOCK', 'CRYPTO']),
-  position: z.enum(['LONG', 'SHORT']),
+  position: z.enum(['BELI', 'JUAL']),
   entryPrice: z.number().positive(),
   exitPrice: z.number().positive().optional(),
   quantity: z.number().positive(),
