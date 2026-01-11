@@ -184,9 +184,9 @@ export function TradesPage() {
                         <div className="text-sm text-muted-foreground">P&L</div>
                         <div className={`font-bold ${trade.pnl >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                           {trade.pnl >= 0 ? '+' : ''}{formatCurrency(trade.pnl)}
-                          {trade.pnlPercent !== null && (
+                          {trade.pnlPercent != null && (
                             <span className="text-xs ml-1">
-                              ({formatPercent(trade.pnlPercent)})
+                              ({formatPercent(trade.pnlPercent!)})
                             </span>
                           )}
                         </div>
