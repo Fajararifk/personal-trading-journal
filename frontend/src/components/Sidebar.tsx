@@ -1,19 +1,23 @@
 import { NavLink } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  TrendingUp, 
-  BookOpen, 
-  BarChart3, 
+import {
+  LayoutDashboard,
+  TrendingUp,
+  BookOpen,
+  BarChart3,
   LogOut,
-  PlusCircle
+  PlusCircle,
+  Briefcase,
+  Shield
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { Button } from './ui/button';
 
 const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/portfolio', icon: Briefcase, label: 'Portfolio' },
   { to: '/trades', icon: TrendingUp, label: 'Trades' },
   { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+  { to: '/risk', icon: Shield, label: 'Risk Tools' },
   { to: '/journal', icon: BookOpen, label: 'Journal' },
 ];
 

@@ -121,6 +121,58 @@ export const api = {
       method: 'DELETE',
       token,
     }),
+
+  // Portfolio
+  getPortfolioSummary: (token: string) =>
+    request<PortfolioSummary>('/api/portfolio/summary', { token }),
+
+  getAssetAllocation: (token: string) =>
+    request<AssetAllocation[]>('/api/portfolio/allocation', { token }),
+
+  getPortfolioPerformance: (token: string, period: string) =>
+    request<PerformancePoint[]>(`/api/portfolio/performance?period=${period}`, { token }),
+
+  getOpenPositions: (token: string) =>
+    request<Position[]>('/api/portfolio/positions', { token }),
+
+  updateAccountBalance: (token: string, accountBalance: number) =>
+    request<{ accountBalance: number }>('/api/portfolio/account-balance', {
+      method: 'PUT',
+      body: JSON.stringify({ accountBalance }),
+      token,
+    }),
+
+  // Risk Management
+  getRiskSettings: (token: string) =>
+    request<RiskSettings>('/api/risk/settings', { token }),
+
+  updateRiskSettings: (token: string, settings: Partial<RiskSettings>) =>
+    request<RiskSettings>('/api/risk/settings', {
+      method: 'PUT',
+      body: JSON.stringify(settings),
+      token,
+    }),
+
+  calculatePositionSize: (token: string, data: PositionSizeInput) =>
+    request<PositionSizeResult>('/api/risk/calculate/position-size', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  calculateStopLoss: (token: string, data: StopLossInput) =>
+    request<StopLossResult>('/api/risk/calculate/stop-loss', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      token,
+    }),
+
+  calculateRiskReward: (token: string, data: RiskRewardInput) =>
+    request<RiskRewardResult>('/api/risk/calculate/risk-reward', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      token,
+    }),
 };
 
 // Types
@@ -220,4 +272,82 @@ export interface JournalInput {
   content: string;
   mood?: number;
   lessons?: string;
+}
+
+// Portfolio Types
+export interface PortfolioSummary {
+  totalValue: number;
+  accountBalance: number;
+  investedAmount: number;
+  realizedPnL: number;
+  unrealizedPnL: number;
+  openPositions: number;
+  totalPositions: number;
+}
+
+export interface AssetAllocation {
+  asset: string;
+  value: number;
+  quantity: number;
+}
+
+export interface PerformancePoint {
+  date: string;
+  pnl: number;
+  cumulativePnL: number;
+}
+
+export interface Position extends Trade {
+  currentValue: number;
+  unrealizedPnL: number;
+  unrealizedPnLPercent: number;
+}
+
+// Risk Management Types
+export interface RiskSettings {
+  accountBalance: number;
+  riskPerTrade: number;
+}
+
+export interface PositionSizeInput {
+  accountBalance: number;
+  riskPercent: number;
+  entryPrice: number;
+  stopLoss: number;
+}
+
+export interface PositionSizeResult {
+  positionSize: number;
+  totalValue: number;
+  riskAmount: number;
+  riskPerUnit: number;
+  portfolioPercent: number;
+}
+
+export interface StopLossInput {
+  entryPrice: number;
+  riskPercent: number;
+  position: 'LONG' | 'SHORT';
+}
+
+export interface StopLossResult {
+  stopLoss: number;
+  distance: number;
+  distancePercent: number;
+}
+
+export interface RiskRewardInput {
+  entryPrice: number;
+  stopLoss: number;
+  targetPrice: number;
+  position: 'LONG' | 'SHORT';
+}
+
+export interface RiskRewardResult {
+  risk: number;
+  reward: number;
+  riskRewardRatio: number;
+  riskPercent: number;
+  rewardPercent: number;
+  isGoodTrade: boolean;
 }

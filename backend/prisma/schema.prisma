@@ -8,12 +8,14 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String   @id @default(cuid())
+  email           String   @unique
+  password        String
+  name            String?
+  accountBalance  Float    @default(0)
+  riskPerTrade    Float    @default(2)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   trades       Trade[]
   journals     Journal[]

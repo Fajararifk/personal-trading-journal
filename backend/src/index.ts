@@ -6,6 +6,8 @@ import authRoutes from './routes/auth';
 import tradesRoutes from './routes/trades';
 import analyticsRoutes from './routes/analytics';
 import journalRoutes from './routes/journal';
+import portfolioRoutes from './routes/portfolio';
+import riskRoutes from './routes/risk';
 
 dotenv.config();
 
@@ -29,6 +31,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/trades', tradesRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/journal', journalRoutes);
+app.use('/api/portfolio', portfolioRoutes);
+app.use('/api/risk', riskRoutes);
 
 // 404 handler
 app.use((req, res) => {

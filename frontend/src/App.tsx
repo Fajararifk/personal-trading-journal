@@ -3,8 +3,10 @@ import { AuthProvider, useAuth } from './lib/auth';
 import { Sidebar } from './components/Sidebar';
 import { LoginPage } from './pages/Login';
 import { DashboardPage } from './pages/Dashboard';
+import { PortfolioPage } from './pages/Portfolio';
 import { TradesPage } from './pages/Trades';
 import { AnalyticsPage } from './pages/Analytics';
+import { RiskManagementPage } from './pages/RiskManagement';
 import { JournalPage } from './pages/Journal';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -56,6 +58,16 @@ function AppRoutes() {
         }
       />
       <Route
+        path="/portfolio"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <PortfolioPage />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
         path="/trades"
         element={
           <PrivateRoute>
@@ -71,6 +83,16 @@ function AppRoutes() {
           <PrivateRoute>
             <Layout>
               <AnalyticsPage />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/risk"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <RiskManagementPage />
             </Layout>
           </PrivateRoute>
         }
