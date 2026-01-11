@@ -2,3 +2,10 @@ node_modules/
 dist/
 .env
 *.log
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Vite build files
+vite.config.js
+vite.config.d.ts
